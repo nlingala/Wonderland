@@ -1,13 +1,15 @@
 import os
 import socket
 import threading
+import zipfile
 
-IP = "192.168.137.43"
-PORT = 4456
+
+IP = "127.0.0.1"
+PORT = 80
 ADDR = (IP, PORT)
-SIZE = 1024
+SIZE = 1000000
 FORMAT = "utf-8"
-SERVER_DATA_PATH = "/home/pi/Documents"
+SERVER_DATA_PATH = r'C:\Users\navne\Documents\3872_TA'
 
 def handle_client(conn, addr):
     print(f"[NEW CONNECTION] {addr} connected.")
@@ -15,8 +17,12 @@ def handle_client(conn, addr):
 
     while True:
         data = conn.recv(SIZE).decode(FORMAT)
-        data = data.split("@")
+        data = data.split("@", 1)
         cmd = data[0]
+        if cmd == "UPLOAD":
+            text = data[1].split("@", 1)
+            data[1] = text[0]
+            data.append(text[1])
 
         if cmd == "LIST":
             files = os.listdir(SERVER_DATA_PATH)
@@ -33,6 +39,9 @@ def handle_client(conn, addr):
             filepath = os.path.join(SERVER_DATA_PATH, name)
             with open(filepath, "w") as f:
                 f.write(text)
+                if ".zip" in name:
+                    with zipfile.ZipFile(name,"r") as zip_ref:
+                        zip_ref.extractall(SERVER_DATA_PATH)
 
             send_data = "OK@File uploaded successfully."
             conn.send(send_data.encode(FORMAT))
@@ -58,7 +67,7 @@ def handle_client(conn, addr):
             send_data += msg
 
             print(f"[{addr}] {msg}")
-            #conn.send(send_data.encode(FORMAT))
+            conn.send(send_data.encode(FORMAT))
 
         elif cmd == "LOGOUT":
             break
@@ -69,9 +78,12 @@ def handle_client(conn, addr):
             data += "DELETE <filename>: Delete a file from the server.\n"
             data += "LOGOUT: Disconnect from the server.\n"
             data += "HELP: List all the commands.\n"
-            data += "SEND: send a message."
+            data += "SEND: <Type_your_message> send a message."
 
             conn.send(data.encode(FORMAT))
+        else:
+            msg = "OK@Illegal Argument"
+            conn.send(msg.encode(FORMAT))
 
     print(f"[DISCONNECTED] {addr} disconnected")
     conn.close()
