@@ -8,7 +8,7 @@ def buffer_load(buf):
     files = os.listdir(SERVER_DATA_PATH)
     for f in files:
         rob, cue_time= f.split("_")
-        cue_time, type = cue_time.split(".")
+        cue_time = cue_time.split(".")[0]
         cue_time = int(cue_time)
         tup = (f, cue_time)
         if rob in buf:
@@ -22,7 +22,6 @@ def buffer_load(buf):
 
 def main():
     buffer = {}
-    print(buffer)
     buffer_load(buffer)
     print(buffer)
 
