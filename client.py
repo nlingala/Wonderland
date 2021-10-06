@@ -1,6 +1,5 @@
 import socket
 import sys
-from types import ClassMethodDescriptorType
 
 IP = "127.0.0.1"
 PORT = 80
@@ -25,7 +24,6 @@ def main():
 
         data = input("> ")
         data = data.split(" ")
-        # print(len(data))
         if len(data) <= 2:   
             cmd = data[0]
 
