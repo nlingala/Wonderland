@@ -2,7 +2,7 @@ import socket
 import sys
 
 IP = "127.0.0.1"
-PORT = 80
+PORT = 3030
 ADDR = (IP, PORT)
 FORMAT = "utf-8"
 SIZE = 1000000

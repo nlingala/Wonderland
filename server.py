@@ -9,7 +9,7 @@ PORT = 80
 ADDR = (IP, PORT)
 SIZE = 1000000
 FORMAT = "utf-8"
-SERVER_DATA_PATH = r'C:\Users\navne\Documents\3872_TA'
+SERVER_DATA_PATH = r'C:\Users\navne\Documents\3872_TA\files'
 
 def handle_client(conn, addr):
     print(f"[NEW CONNECTION] {addr} connected.")
