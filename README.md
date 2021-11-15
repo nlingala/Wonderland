@@ -9,12 +9,12 @@ Things to do:
 
 Team Computer - Directior:
 Framework complete:
-Transfer zip file containing script files in the format [(ROBOT#)_(CueTime in Milliseconds)] for example: [R01_1000]
+- Transfer zip file containing script files in the format [(ROBOT#)_(CueTime in Milliseconds)] for example: [R01_1000]
 
 Director - Robot:
 Framework in working condition
-Needs few more updates
-Multithreading file transfer application from server to specific robot.
+- Needs few more updates
+- Multithreading file transfer application from server to specific robot.
 - The files will be queued into a buffer and sent to the proper robot at the corresponding time
 
 Questions:
