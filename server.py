@@ -5,7 +5,7 @@ import zipfile
 
 
 IP = "127.0.0.1"
-PORT = 80
+PORT = 3030
 ADDR = (IP, PORT)
 SIZE = 1000000
 FORMAT = "utf-8"
@@ -20,9 +20,9 @@ def handle_client(conn, addr):
         data = data.split("@", 1)
         cmd = data[0]
         if cmd == "UPLOAD":
-            text = data[1].split("@", 1)
-            data[1] = text[0]
-            data.append(text[1])
+            filename, filesize = data[1].split("@", 1)
+            data[1] = filename
+            data.append(filesize)
 
         if cmd == "LIST":
             files = os.listdir(SERVER_DATA_PATH)
@@ -35,13 +35,17 @@ def handle_client(conn, addr):
             conn.send(send_data.encode(FORMAT))
 
         elif cmd == "UPLOAD":
-            name, text = data[1], data[2]
+            name, size = data[1], data[2]
             filepath = os.path.join(SERVER_DATA_PATH, name)
-            with open(filepath, "w") as f:
+            with open(filepath, "wb") as f:
+                text = conn.recv(int(size))
                 f.write(text)
+                f.close()
                 if ".zip" in name:
-                    with zipfile.ZipFile(name,"r") as zip_ref:
+                    with zipfile.ZipFile(filepath,"r") as zip_ref:
                         zip_ref.extractall(SERVER_DATA_PATH)
+                    os.system(f"rm {SERVER_DATA_PATH}/{filename}")            # system(f"rm {SERVER_DATA_PATH}/{filename}") on linux ############### system(f"del /f {SERVER_DATA_PATH}\{filename}" on windows
+            
 
             send_data = "OK@File uploaded successfully."
             conn.send(send_data.encode(FORMAT))

@@ -1,5 +1,6 @@
 import socket
 import sys
+import os
 
 IP = "127.0.0.1"
 PORT = 3030
@@ -40,10 +41,12 @@ def main():
                 path = data[1]
                 try:
                     with open(f"{path}", "rb") as f:
-                        text = f.read()
-                        filename = path.split("/")[-1]
-                        send_data = f"{cmd}@{filename}@{text}"
+                        filesize = os.path.getsize(path)
+                        text = f.read(filesize)
+                        filename = path.split("/")[-1]                 # filename = path.split("/")[-1] on linux systems. ####### filename = path.split("\\")[-1] on Windows 
+                        send_data = f"{cmd}@{filename}@{filesize}"
                         client.sendall(send_data.encode(FORMAT))
+                        client.sendall(text)
                 except OSError as err:
                     print("OS error: {0}".format(err))
                     client.send(ERR.encode(FORMAT))
