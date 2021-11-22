@@ -1,21 +1,25 @@
+# File: play.py
+# ECE 3872 Spring 2022 Wonderland Project
+# Author: Navneet Lingala
+# Director Program for "Director-Robot" Connection
+# ONLY modify lines that have been highlighted as MODIFIABLE
+
 import os
 import socket
 import threading
 import time
 
-# , "127.0.0.1": "R02", "127.0.0.1": "R03"
-
-# ROBOT = {"127.0.0.1": "R01"}
-
-IP = "192.168.137.43"
+# Global Variables
+IP = "192.168.137.43"       # MODIFIABLE: Change server IP as needed. Should be hardcoded already 
 SIZE = 1024
 FORMAT = "utf-8"
 PORT = 3030
 ADDR = (IP, PORT)
 NUM_R = 3
-SERVER_DATA_PATH = r'/home/pi/Documents'
+SERVER_DATA_PATH = r'/home/pi/Documents'        # MODIFIABLE: Change server data path as needed.
 SEPARATOR = "<SEPARATOR>"
 
+# buffer initializer
 def buffer_load(buf):
     files = os.listdir(SERVER_DATA_PATH)
     for f in files:
@@ -31,13 +35,14 @@ def buffer_load(buf):
         else:
             buf[rob] = tup
 
-
+# file enumeration
 def buffer_enumerate_files(name, buffer):
     file = []
     for e in buffer[name]:
         file.append(e[0])
     return file
 
+# Cue time calculations
 def buffer_enumerate_times(name, buffer):
     time_after_cue = []
     for e in buffer[name]:
@@ -47,22 +52,25 @@ def buffer_enumerate_times(name, buffer):
             time_after_cue.append(e[1]-time_after_cue[-1])
     return time_after_cue
 
-#returns ms since the epoch
+# returns ms since the epoch
 def millis():
         return time.time() * 1000
 
+# Time delay function
 def switchTheThing(howlong):
     start = millis()
     while ( (start + howlong) > millis() ):
         pass
 
-def handle_client(conn, addr, file_list, time_list):
+## Function that handles new Robot Connections
+ # Appropriate files are sent to corresponding robots at cue time.
+ # Files are sent automatically 3 seconds after the correct number of robots have connected to the Director
+def handle_client(conn, addr, file_list, time_list, num):
     print(f"[NEW CONNECTION] {addr} connected.")
-    # conn.send("Welcome to the Director Server.".encode(FORMAT))
     while True: 
         count = threading.active_count() - 1
         time.sleep(3)
-        if count == 1:  
+        if count == num:  
             # print("started")
             # start = time.perf_counter()
             for i in range(len(file_list)):
@@ -88,9 +96,21 @@ def handle_client(conn, addr, file_list, time_list):
     conn.send("DISCONNECT".encode())
     conn.close()
 
+# Unused function
 # def robot_connection(addr, buffer):
 #     return (buffer_enumerate_files(ROBOT[addr], buffer), buffer_enumerate_times(ROBOT[addr], buffer))
 
+## Main Function that creates new threads for each new Robot Connection
+ # Server has no limit to number of connections and will always listen.
+ # 
+ # At the start of program function asks for 2 arguments:
+ #      Number of Robots trying to connect to Director
+ #      local IP of each robot. 
+ #      Note: input order matters. For example first IP address corresponds to R01 (robot 1) as per file naming format
+ # 
+ # File Buffer initializes
+ # 
+ ##
 def main():
     print("[STARTING] Server is starting") 
     server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -98,8 +118,8 @@ def main():
     server.listen()
     print(f"[LISTENING] Server is listening on {IP}:{PORT}.")
     robot_addr = []
-    num = input("Number of Robots: ")
-    for i in range(int(num)):
+    number_of_rob = input("Number of Robots: ")
+    for i in range(int(number_of_rob)):
         rob_ip = input("Robot IP: ")
         robot_addr.append(rob_ip)
     print()
@@ -109,25 +129,15 @@ def main():
         conn, addr = server.accept()
         file_list = []
         time_list = []
-        # file_list, time_list = robot_connection(addr[0], buffer)
         for ind, i in enumerate(robot_addr):
             if addr[0] == i:
                 file_list = buffer_enumerate_files("R0" + str(ind + 1), buffer)
                 time_list = buffer_enumerate_times("R0" + str(ind + 1), buffer)
         
-        thread = threading.Thread(target=handle_client, args=(conn, addr, file_list, time_list))
+        thread = threading.Thread(target=handle_client, args=(conn, addr, file_list, time_list, number_of_rob))
         thread.start()
         print(f"[ACTIVE CONNECTIONS] {threading.activeCount() - 1}")
-        # count = threading.active_count() - 1
-        # if count == NUM_R: 
-        #     start = time.perf_counter()
-        #     while True:
-        #         count = threading.active_count() - 1
-        #         if count == 0:
-        #             finish = time.perf_counter()
-        #             print(f'finished in {round(finish-start,3)} seconds(s)')
-        #             break
 
-
+# Script to call main function
 if __name__ == "__main__":
     main()
