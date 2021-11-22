@@ -1,16 +1,37 @@
+# File: server.py
+# ECE 3872 Spring 2022 Wonderland Project
+# Author: Navneet Lingala
+# Director Program for "Team Computer-Director" Connection
+# ONLY modify lines that have been highlighted as MODIFIABLE
+
 import os
 import socket
 import threading
 import zipfile
 
-
-IP = "127.0.0.1"
+# Global Variables 
+IP = "127.0.0.1"        # MODIFIABLE: Change server IP as needed. Should be hardcoded already 
 PORT = 3030
 ADDR = (IP, PORT)
 SIZE = 1000000
 FORMAT = "utf-8"
-SERVER_DATA_PATH = r'C:\Users\navne\Documents\3872_TA\files'
+SERVER_DATA_PATH = r'C:\Users\navne\Documents\3872_TA\files'        # MODIFIABLE: Change server data path as needed.
 
+## Function that handles new Team Computer Connections
+ # Commands available for each Client Computer:
+ # LIST: List all the files on the server.
+ # UPLOAD <path>: Upload a file to the server.
+ # DELETE <filename>: Delete a file from the server.
+ # LOGOUT: Disconnect from the server.
+ # HELP: List all the commands.
+ # SEND: <Type_your_message> (No spaces in message) send a message.
+ #
+ # Students will use these commands to check the files on the server and upload new scripts.
+ # File Naming Format:[(ROBOT#)_(CueTime in Milliseconds).xxx] for example: [R01_1000.txt]
+ # If sending multiple files you can place it in a .zip
+ # Director will automatically extract all files in zip. 
+ # CAUTION: Zip folder will be deleted after extraction. 
+ ##
 def handle_client(conn, addr):
     print(f"[NEW CONNECTION] {addr} connected.")
     conn.send("OK@Welcome to the File Server.".encode(FORMAT))
@@ -44,7 +65,7 @@ def handle_client(conn, addr):
                 if ".zip" in name:
                     with zipfile.ZipFile(filepath,"r") as zip_ref:
                         zip_ref.extractall(SERVER_DATA_PATH)
-                    os.system(f"rm {SERVER_DATA_PATH}/{filename}")            # system(f"rm {SERVER_DATA_PATH}/{filename}") on linux ############### system(f"del /f {SERVER_DATA_PATH}\{filename}" on windows
+                    os.system(f"rm {SERVER_DATA_PATH}/{filename}")          # MODIFIABLE: ONLY either of these options: ---os.system(f"rm {SERVER_DATA_PATH}/{filename}")--- on linux             ---os.system(f"del /f {SERVER_DATA_PATH}\{filename}")--- on windows
             
 
             send_data = "OK@File uploaded successfully."
@@ -59,7 +80,7 @@ def handle_client(conn, addr):
                 send_data += "The server directory is empty"
             else:
                 if filename in files:
-                    os.system(f"rm {SERVER_DATA_PATH}/{filename}")
+                    os.system(f"rm {SERVER_DATA_PATH}/{filename}")          # MODIFIABLE: ONLY either of these options: ---os.system(f"rm {SERVER_DATA_PATH}/{filename}")--- on linux             ---os.system(f"del /f {SERVER_DATA_PATH}\{filename}")--- on windows
                     send_data += "File deleted successfully."
                 else:
                     send_data += "File not found."
@@ -92,6 +113,9 @@ def handle_client(conn, addr):
     print(f"[DISCONNECTED] {addr} disconnected")
     conn.close()
 
+## Main Function that creates new threads for each new Team Computer Connection
+ # Server has no limit to number of connections and will always listen.
+ ##
 def main():
     print("[STARTING] Server is starting")
     server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -105,5 +129,6 @@ def main():
         thread.start()
         print(f"[ACTIVE CONNECTIONS] {threading.activeCount() - 1}")
 
+# Script to call main function
 if __name__ == "__main__":
     main()

@@ -1,14 +1,38 @@
+# File: client.py
+# ECE 3872 Spring 2022 Wonderland Project
+# Author: Navneet Lingala
+# Team Computer Program for "Team Computer-Director" Connection
+# ONLY modify lines that have been highlighted as MODIFIABLE
+
 import socket
 import sys
 import os
 
-IP = "127.0.0.1"
+# Global Variables 
+IP = "127.0.0.1"        # MODIFIABLE: Change server IP as needed. Should be hardcoded already 
 PORT = 3030
 ADDR = (IP, PORT)
 FORMAT = "utf-8"
 SIZE = 1000000
 ERR = "error"
 
+## Function that sends commands to Director
+ # Commands available for each Client Computer:
+ # LIST: List all the files on the server.
+ # UPLOAD <path>: Upload a file to the server.
+ # DELETE <filename>: Delete a file from the server.
+ # LOGOUT: Disconnect from the server.
+ # HELP: List all the commands.
+ # SEND: <Type_your_message> (No spaces in message) send a message.
+ #
+ # Students will use these commands to check the files on the server and upload new scripts.
+ #
+ # File Naming Format:[(ROBOT#)_(CueTime in Milliseconds).xxx] for example: [R01_1000.txt]
+ # If sending multiple files you can place it in a .zip
+ # Director will automatically extract all files in zip. 
+ # CAUTION: Zip folder will be deleted after extraction. 
+ # 
+ ##
 def main():
     client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     client.connect(ADDR)
@@ -43,7 +67,7 @@ def main():
                     with open(f"{path}", "rb") as f:
                         filesize = os.path.getsize(path)
                         text = f.read(filesize)
-                        filename = path.split("/")[-1]                 # filename = path.split("/")[-1] on linux systems. ####### filename = path.split("\\")[-1] on Windows 
+                        filename = path.split("/")[-1]                 # MODIFIABLE: ONLY either of these options: ---filename = path.split("/")[-1]--- on linux          ---filename = path.split("\\")[-1]--- on Windows 
                         send_data = f"{cmd}@{filename}@{filesize}"
                         client.sendall(send_data.encode(FORMAT))
                         client.sendall(text)
@@ -64,5 +88,6 @@ def main():
     print("Disconnected from the server.")
     client.close()
 
+# Script to call main function
 if __name__ == "__main__":
     main()

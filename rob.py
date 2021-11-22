@@ -1,18 +1,26 @@
+# File: rob.py
+# ECE 3872 Spring 2022 Wonderland Project
+# Author: Navneet Lingala
+# Robot Program for "Director-Robot" Connection
+# ONLY modify lines that have been highlighted as MODIFIABLE
+
 import socket
 import os
 
-IP = "127.0.0.1"    # Change
-SERVER_DATA_PATH = r'C:\Users\navne\Documents\3872_TA\robot_files' # Change path for your convenience
+IP = "127.0.0.1"        # MODIFIABLE: Change server IP as needed. Should be hardcoded already
 
-#*****************DO NOT CHANGE*********************
+SERVER_DATA_PATH = r'C:\Users\navne\Documents\3872_TA\robot_files'          # MODIFIABLE: Change robot data path as needed.
+
 PORT = 3030
 ADDR = (IP, PORT)
 FORMAT = "utf-8"
 SIZE = 1024
 ERR = "error"
 SEPARATOR = "<SEPARATOR>"
-#***************************************************
 
+## Function that accepts incomming files.
+ # Files are stored in the path stated above.
+ ##
 def listen_for_director():
     client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     client.connect(ADDR)
@@ -29,7 +37,6 @@ def listen_for_director():
     client.close()
 
 def decode_file():
-
     # Test Code
 
     # Implement file decoding and playing on robot
@@ -37,9 +44,16 @@ def decode_file():
 
     return
 
+
+# runs fils listener
+# Other computation can be coded here
 def main():
     listen_for_director()
     decode_file()
 
+    # *********** Your code goes here *********** #
+
+
+# Script to call main function
 if __name__ == "__main__":
     main()
