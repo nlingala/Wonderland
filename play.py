@@ -64,7 +64,7 @@ def switchTheThing(howlong):
 
 ## Function that handles new Robot Connections
  # Appropriate files are sent to corresponding robots at cue time.
- # Files are sent automatically 3 seconds after the correct number of robots have connected to the Director
+ # Files are automatically sent 3 seconds after the correct number of robots have connected to the Director
 def handle_client(conn, addr, file_list, time_list, num):
     print(f"[NEW CONNECTION] {addr} connected.")
     while True: 

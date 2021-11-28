@@ -44,7 +44,7 @@ def decode_file():
     return
 
 
-# runs fils listener
+# runs file listener
 # Other computation can be coded here
 def main():
     listen_for_director()
