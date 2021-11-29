@@ -9,7 +9,7 @@ import os
 
 # Global Variables
 IP = "192.168.137.43"    # MODIFIABLE: Change server IP as needed. Should be hardcoded already
-SERVER_DATA_PATH = r'/home/pi/Documents'    # MODIFIABLE: Change robot data path as needed.
+SERVER_DATA_PATH = r'/home/pi/Documents/robot_files'    # MODIFIABLE: Change robot data path as needed.
 PORT = 3030
 ADDR = (IP, PORT)
 FORMAT = "utf-8"

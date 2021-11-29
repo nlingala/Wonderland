@@ -16,7 +16,7 @@ FORMAT = "utf-8"
 PORT = 3030
 ADDR = (IP, PORT)
 NUM_R = 3
-SERVER_DATA_PATH = r'/home/pi/Documents'        # MODIFIABLE: Change server data path as needed.
+SERVER_DATA_PATH = r'/home/pi/Documents/upload_files'        # MODIFIABLE: Change server data path as needed.
 SEPARATOR = "<SEPARATOR>"
 
 # buffer initializer
@@ -33,7 +33,7 @@ def buffer_load(buf):
             buf[rob].append(tup)
             buf[rob].sort(key=lambda tup: tup[1])
         else:
-            buf[rob] = tup
+            buf[rob] = [tup]
 
 # file enumeration
 def buffer_enumerate_files(name, buffer):

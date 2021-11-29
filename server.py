@@ -15,7 +15,7 @@ PORT = 4456
 ADDR = (IP, PORT)
 SIZE = 1000000
 FORMAT = "utf-8"
-SERVER_DATA_PATH = r"/home/pi/Documents"        # MODIFIABLE: Change server data path as needed.
+SERVER_DATA_PATH = r"/home/pi/Documents/upload_files"        # MODIFIABLE: Change server data path as needed.
 
 ## Function that handles new Team Computer Connections
  # Commands available for each Client Computer:
