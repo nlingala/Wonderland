@@ -2,10 +2,9 @@
 Spring 2022 ECE 3872 Design Project Framework
 
 ## Things to do:
-1. Need another input argument(number of connections) for handler function
-2. Test case for Robot application - half complete (print the file)
-3. Design Doc - images, video
-4. Need more pis and a laptop now
+1. Test case for Robot application - half complete (print the file)
+2. Need more pis and a laptop now
+3. Need to test multiple Pis and delay
 
 ## Team Computer - Directior:
 ### Framework complete:
