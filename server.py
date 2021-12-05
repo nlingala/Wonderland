@@ -2,6 +2,8 @@
 # ECE 3872 Spring 2022 Wonderland Project
 # Author: Navneet Lingala
 # Director Program for "Team Computer-Director" Connection
+# Establishes team computer connections and handles commands from the team computers. 
+# Line Files will be stored in the specified in the file path below.
 # ONLY modify lines that have been highlighted as MODIFIABLE
 
 import os
@@ -27,9 +29,9 @@ SERVER_DATA_PATH = r"/home/pi/Documents/upload_files"        # MODIFIABLE: Chang
  # SEND: <Type_your_message> (No spaces in message) send a message.
  #
  # Students will use these commands to check the files on the server and upload new scripts.
- # File Naming Format:[(ROBOT#)_(CueTime in Milliseconds).xxx] for example: [R01_1000.txt]
- # If sending multiple files you can place it in a .zip
- # Director will automatically extract all files in zip. 
+ # - File Naming Format:[(ROBOT#)_(CueTime in Milliseconds).xxx] for example: [R01_1000.txt]
+ # - If sending multiple files you can place it in a .zip
+ # - Director will automatically extract all files in zip. 
  # CAUTION: Zip folder will be deleted after extraction. 
  ##
 def handle_client(conn, addr):

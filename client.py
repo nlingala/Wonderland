@@ -2,6 +2,8 @@
 # ECE 3872 Spring 2022 Wonderland Project
 # Author: Navneet Lingala
 # Team Computer Program for "Team Computer-Director" Connection
+# Responsible for sending line files and commands to the director from the team computer
+# server.py must be running on the director before this file can be ran on the team computer.
 # ONLY modify lines that have been highlighted as MODIFIABLE
 
 import socket

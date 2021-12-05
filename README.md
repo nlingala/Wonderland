@@ -2,10 +2,7 @@
 Spring 2022 ECE 3872 Design Project Framework
 
 ## Things to do:
-1. Need another input argument(number of connections) for handler function
-2. Test case for Robot application - half complete (print the file)
-3. Design Doc - images, video
-4. Need more pis and a laptop now
+1. Need more pis and a laptop now
 
 ## Team Computer - Directior:
 ### Framework complete:
@@ -18,5 +15,3 @@ Spring 2022 ECE 3872 Design Project Framework
 
 ## Questions:
 1. Testing on same device (file transfer is quick for even large files <10ms): Need to check on network
-2. Currently downloads new file to robot: should I create a return value for it or is it better to have the students write that portion of file io?
-3. Should we send all files that the Director receives to all robots at the corresponding cue time and have the students filter out which files are theirs?

@@ -2,6 +2,8 @@
 # ECE 3872 Spring 2022 Wonderland Project
 # Author: Navneet Lingala
 # Robot Program for "Director-Robot" Connection
+# Accepts incomming line files from the director
+# play.py must be running on the director before this file can be ran on the robot.
 # ONLY modify lines that have been highlighted as MODIFIABLE
 
 import socket
@@ -35,21 +37,11 @@ def listen_for_director():
         f.close()
     client.close()
 
-def decode_file():
-    # Test Code
-
-    # Implement file decoding and playing on robot
-    # *********** Your code goes here *********** #
-
-    return
-
-
 # runs file listener
 # Other computation can be coded here
 def main():
     listen_for_director()
-    decode_file()
-
+    
     # *********** Your code goes here *********** #
 
 

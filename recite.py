@@ -2,8 +2,8 @@
 # ECE 3872 Spring 2022 Wonderland Project
 # Author: Navneet Lingala
 # Robot Program for Decoding and Processing
-# ONLY modify lines that have been highlighted as MODIFIABLE
 # Students must complete this program to process their scripts
+# An example has been provided below.
 
 import os
 
@@ -21,7 +21,7 @@ def main():
             pass
         elif files not in read:
             # Some code has been written to get your started
-            # *********** Your code goes here *********** #
+            # *********** Your code goes here *********** # 
             read.append(files)
             count = count + 1
             f = open(files, "r")

@@ -2,6 +2,8 @@
 # ECE 3872 Spring 2022 Wonderland Project
 # Author: Navneet Lingala
 # Director Program for "Director-Robot" Connection
+# This file is reponsible for creating the local line file buffer and establishing robot connections.
+# Once the correct number of robots have been connected, line files will automatically be sent at the appropriate cue time.
 # ONLY modify lines that have been highlighted as MODIFIABLE
 
 import os
@@ -104,11 +106,11 @@ def handle_client(conn, addr, file_list, time_list, num):
  # Server has no limit to number of connections and will always listen.
  # 
  # At the start of program function asks for 2 arguments:
- #      Number of Robots trying to connect to Director
- #      local IP of each robot. 
+ #      - Number of Robots trying to connect to Director
+ #      - Local IP of each robot. 
  #      Note: input order matters. For example first IP address corresponds to R01 (robot 1) as per file naming format
  # 
- # File Buffer initializes
+ # Line File Buffer initializes
  # 
  ##
 def main():
