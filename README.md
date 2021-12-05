@@ -3,6 +3,7 @@ Spring 2022 ECE 3872 Design Project Framework
 
 ## Things to do:
 1. Need more pis and a laptop now
+2. Need to test multiple Pis and delay
 
 ## Team Computer - Directior:
 ### Framework complete:
