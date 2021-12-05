@@ -20,7 +20,7 @@ def main():
         if files is None:
             pass
         elif files not in read:
-            # Some code has been written to get your started
+            # Some code has been written to get you started
             # *********** Your code goes here *********** # 
             read.append(files)
             count = count + 1
